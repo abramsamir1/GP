@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text ,ScrollView} from 'react-native';
 import { connect } from 'react-redux';
-import { getUserPlaces } from './actions/VisitedPlacesActions';
-import { Header, Left, Body, Title, Right } from 'native-base';
-import VisitedPlacesItem from './VisitedPlacesItem';
-import Spinner from './common/Spinner';
-
+import { getUserPlaces } from '../actions/VisitedPlacesActions.js';
+import { Header, Left, Body, Title, Right ,Container ,Content} from 'native-base';
+import VisitedPlacesItem from './VisitedPlacesItem.js';
+import {Spinner } from '../common/Spinner.js';
+import Appfooter from '../common/Appfooter.js';
+import ls from 'react-native-local-storage';
 class VisitedPlaces extends Component {
 
   componentWillMount() {
-    const user_id = 1;
-    this.props.getUserPlaces({ user_id });
+    ls.get('user_id').then((user_id) => {
+        if (user_id) {
+          this.props.getUserPlaces({ user_id });
+        }
+      });
   }
+ _keyExtractor = (item, index) => item.id;
 
   renderFlatList() {
     console.log('this.props.places.loading', this.props.places.loading);
@@ -19,10 +24,10 @@ class VisitedPlaces extends Component {
     return (
       <FlatList
         data={this.props.places.data.products}
+        keyExtractor={(item, index ) => item.id }
         renderItem={({ item, index }) => {
-          console.log(`item = ${JSON.stringify(item)} , index= ${item.id}`);
           return (
-            <VisitedPlacesItem item={item} index={index} />
+            <VisitedPlacesItem keyExtractor={this._keyExtractor} item={item} key = {item.id} index={index} />
           );
         }}
       />
@@ -33,19 +38,16 @@ class VisitedPlaces extends Component {
 
   render() {
       return (
-        <View style={{ flex: 1 }}>
-
-            <Header>
-              <Left />
-              <Body>
-                <Title>Visited places</Title>
-              </Body>
-              <Right />
-            </Header>
-
+      <Container>
+      <Content>
+        <ScrollView style={{ flex: 1 }}>
         {this.renderFlatList()}
         <Text style={styles.errorTextStyle}>{this.props.places.error}</Text>
-        </View>
+        </ScrollView>
+      </Content>
+        <Appfooter navigation = {this.props.navigation} />
+      </Container>
+
       );
   }
 }

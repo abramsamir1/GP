@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 import { connect } from 'react-redux';
-import { saveRate } from './actions/HomeActions';
-import StarRating from 'react-native-stars-rating';
+import { saveRate } from '../actions/HomeActions';
 import { fullStar } from 'react-native-vector-icons';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body} from 'native-base';
+import StarRating from 'react-native-stars-rating';
 
 class HomeCard extends Component {
 
@@ -32,8 +32,8 @@ onCustomStarRatingPress(rating) {
 
 renderSaveRate(rating) {
   console.log('rating', rating);
-  const userId = 1;
-  this.props.saveRate(userId , this.props.item.id, rating , this.props.item.description);
+  const user_id = 1;
+  this.props.saveRate({ user_id ,product_id: this.props.item.id, rate_number: rating , description: this.props.item.description});
 }
 
 
@@ -63,14 +63,15 @@ console.log('place_name', this.props.item.place_name);
     </CardItem>
 
     <CardItem>
-          <Text style={styles.textStyle}>Rate: </Text>
+          <Text style={styles.textStyle}>Avg: {this.props.item.rate_number}/5</Text>
           <StarRating
-          isActive={true}
+          isActive={false}
           rateMax={5}
           isHalfStarEnabled={false}
           onStarPress={rating => this.renderSaveRate(rating)}
-          rate={this.props.item.rate_number}
+          rate={0}
           size={45}
+          rating = {0}
           />
      </CardItem>
   </View>

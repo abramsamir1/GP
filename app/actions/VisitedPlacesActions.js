@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   GET_PLACES_ATTEMP,
   GET_PLACES_ATTEMP_SUCCESS,
-  GET_PLACES_ATTEMP_FAILED } from './type';
+  GET_PLACES_ATTEMP_FAILED } from './types.js';
 
 
 export const getUserPlaces = ({ user_id }) => {

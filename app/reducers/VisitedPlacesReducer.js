@@ -1,7 +1,7 @@
 import {
   GET_PLACES_ATTEMP,
   GET_PLACES_ATTEMP_SUCCESS,
-  GET_PLACES_ATTEMP_FAILED } from '../actions/type';
+  GET_PLACES_ATTEMP_FAILED } from '../actions/types.js';
 
   const INITIAL_STATE = {
     loading: false,

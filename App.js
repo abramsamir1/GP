@@ -1,24 +1,38 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import Home from './src/Home';
-import VisitedPlaces from './src/VisitedPlaces';
-import reducers from './src/reducers';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
 
-class App extends Component {
-constructor() {
-super();
-console.disableYellowBox = true;
-}
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Platform
+} from 'react-native';
+import {Provider} from 'react-redux'
+import {createStore,applyMiddleware} from 'redux';
+import reduxThunk from 'redux-thunk';
+import Navigator from './app/Navigator.js';
+import reducers from './app/reducers';
+
+
+export default class App extends Component<{}> {
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <Provider store={store}>
-          <Home />
-      </Provider>
-    );
+        <Provider store={createStore(reducers,{},applyMiddleware(reduxThunk))}>
+            <Navigator style = {styles.container}/>
+        </Provider>
+      )
   }
 }
-export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+
+});

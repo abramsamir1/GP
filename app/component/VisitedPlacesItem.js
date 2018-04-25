@@ -6,8 +6,7 @@ import { CardItem, Thumbnail, Text, Left, Body } from 'native-base';
 class VisitedPlacesItem extends Component {
 render() {
     return (
-      <View>
-      <CardItem>
+      <CardItem key = {this.props.item.id}>
           <Left>
               <Thumbnail source={{ uri: this.props.item.shop_image }} />
               <Body>
@@ -17,7 +16,6 @@ render() {
               </Body>
           </Left>
       </CardItem>
-      </View>
     );
   }
 }
